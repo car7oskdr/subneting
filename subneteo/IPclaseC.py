@@ -38,5 +38,45 @@ class claseC:
             print('\t\n',var_subred,'!>=',self.subredes)
             print('*' * 80)
     
-    def subnettin(self):
-        pass
+class ClaseCsubnetting(claseC):
+
+    def subnetting(self):
+        while True:
+            try:
+                n_rangos = int(input('Ingrese el numero de rangos: '))
+                if n_rangos <= 0:
+                    print('\n\tFavor de ingresar un valor entero mayor a cero.\n')
+                elif n_rangos > self.subredes:
+                    print('\n\tEl número de rangos no puede ser mayor al número de subredes\n')
+                else:
+                    break
+            except ValueError:
+                print('\n\tFavor de ingresar un valor entero mayor a cero.\n')
+        lista_rangos = []
+        while True:
+            try:
+                for x in range(0, n_rangos):
+                    in_rango = int(input('\n\tIngresa un rango: '))
+                    lista_rangos.append(in_rango)
+                break
+            except ValueError:
+                print('\n\t favor de ingresar un rango correcto debe ser entero, mayor a cero y menor al número de subredes.\n')
+                lista_rangos = []
+        lista_rangos_bin = []
+        for x in range(0, n_rangos):
+            lista_rangos_bin.append(bin(lista_rangos[x]))
+        lista_binaria = []
+        for x in range(len(lista_rangos_bin)):
+            var_binaria = lista_rangos_bin[x]
+            lista_binaria.append(var_binaria[2:])
+        del lista_rangos_bin
+        self.dir_ip.pop()
+        print(len(bin(self.subredes)) - 2)
+        """lista_enteros = []
+        for x in range(len(lista_binaria)):
+            var_entera = lista_binaria[x]
+            var_entera = int(var_entera, 2)
+            lista_enteros.append(var_entera)
+        del lista_binaria
+        print(lista_enteros)"""
+

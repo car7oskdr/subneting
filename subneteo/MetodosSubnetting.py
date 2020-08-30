@@ -1,5 +1,6 @@
 from os import system
 from IPclaseC import claseC as c
+from IPclaseC import ClaseCsubnetting as subC
 
 class metodosSub:
     
@@ -38,7 +39,8 @@ class metodosSub:
                             c(var_sub, self.ip_int)
                             break
                         elif var_sub > 0 and self.opc_metodo == 3:
-                            print('Metodo para subnetting')
+                            var_tem = subC(var_sub, self.ip_int)
+                            var_tem.subnetting()
                             break
                         else:
                             print('\n\tFavor de introducir un número de subredes mayor a cero.')
