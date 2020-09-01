@@ -39,10 +39,11 @@ class claseC:
             print('*' * 80)
     
 class ClaseCsubnetting(claseC):
-
+    # inicio de clase para realizar el subnetting.
     def subnetting(self):
         while True:
             try:
+                # obtención y verificación del rango ingresado por el usuario.
                 n_rangos = int(input('Ingrese el numero de rangos: '))
                 if n_rangos <= 0:
                     print('\n\tFavor de ingresar un valor entero mayor a cero.\n')
@@ -52,9 +53,11 @@ class ClaseCsubnetting(claseC):
                     break
             except ValueError:
                 print('\n\tFavor de ingresar un valor entero mayor a cero.\n')
+        # lista para guardar los rangos que indique el usuario.
         lista_rangos = []
         while True:
             try:
+                # llenamos la lista de los rangos.
                 for x in range(0, n_rangos):
                     in_rango = int(input('\n\tIngresa un rango: '))
                     lista_rangos.append(in_rango)
@@ -62,21 +65,70 @@ class ClaseCsubnetting(claseC):
             except ValueError:
                 print('\n\t favor de ingresar un rango correcto debe ser entero, mayor a cero y menor al número de subredes.\n')
                 lista_rangos = []
+        # lista para lamacenar los rangos en binario
         lista_rangos_bin = []
         for x in range(0, n_rangos):
             lista_rangos_bin.append(bin(lista_rangos[x]))
+        # lista para almacenar los numros binarios sin "0b"
         lista_binaria = []
         for x in range(len(lista_rangos_bin)):
             var_binaria = lista_rangos_bin[x]
             lista_binaria.append(var_binaria[2:])
         del lista_rangos_bin
         self.dir_ip.pop()
-        print(len(bin(self.subredes)) - 2)
-        """lista_enteros = []
+        # inicio del rango.
+        i_lista_binaria = []
         for x in range(len(lista_binaria)):
-            var_entera = lista_binaria[x]
-            var_entera = int(var_entera, 2)
-            lista_enteros.append(var_entera)
-        del lista_binaria
-        print(lista_enteros)"""
-
+            lista_aux = []
+            var = lista_binaria[x]
+            for y in range(len(var)):
+                lista_aux.append(var[y])
+            while len(lista_aux) < len(bin(self.subredes)) - 2:
+                lista_aux.insert(0, '0')
+            while (len(lista_aux) + 1) <= 8:
+                lista_aux.insert(len(lista_aux ) + 1, '0')
+            var = ''.join(map(str, lista_aux))
+            i_lista_binaria.append(var)
+            lista_aux = []
+        # fin del rango.
+        f_lista_binaria = []
+        for x in range(len(lista_binaria)):
+            lista_aux = []
+            var = lista_binaria[x]
+            for y in range(len(var)):
+                lista_aux.append(var[y])
+            while len(lista_aux) < len(bin(self.subredes)) - 2:
+                lista_aux.insert(0, '0')
+            while (len(lista_aux) + 1) <= 8:
+                lista_aux.insert(len(lista_aux) + 1, '1')
+            var = ''.join(map(str, lista_aux))
+            f_lista_binaria.append(var)
+            lista_aux = []
+        # obtención del inicio y fin del rango en enteros.
+        for x in range(len(lista_binaria)):
+            var_int = int(i_lista_binaria[x], 2)
+            var_int_f = int(f_lista_binaria[x], 2)
+            i_lista_binaria[x] = var_int
+            f_lista_binaria[x] = var_int_f
+        
+        def ini_fin(rangos, direc_ip, inicio_lis, fin_lis):
+            inicio = []
+            fin = []
+            for x in range(len(rangos)):
+                for y in range(0, 3):
+                    inicio.append(direc_ip[y])
+                    fin.append(direc_ip[y])
+                inicio.append(inicio_lis[x])
+                fin.append(fin_lis[x])
+                i_var = '.'.join(map(str, inicio))
+                f_var = '.'.join(map(str, fin))
+                print('+' * 80)
+                print('\n\tRango:',x + 1,rangos[x])
+                print('\n\t\tInicio de rango: ', i_var)
+                print('\n\t\tFinal de rango: ', f_var)
+                inicio = []
+                fin = []
+            print('+' * 80)
+        
+        ini_fin(lista_rangos, self.dir_ip, i_lista_binaria, f_lista_binaria)
+        
