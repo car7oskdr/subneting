@@ -9,7 +9,7 @@ class claseC:
         print('*' * 80)
         # mensaje de salida al utilizar la clase.
         ip_string = '.'.join(map(str, self.dir_ip))
-        print('\n\tLa ip ',ip_string,'es clase C su mascara de red es: 255.255.255.0')
+        print('\n\tLa ip ',ip_string,'es clase C su mascara de red es: 255.255.255.0 /24')
         print('\tEl número de subredes requerido son',self.subredes,'\n')
     # comprovación para saber si es viable el desarrollo de subneting.
         # pasar el número de subredes a binario.
@@ -25,13 +25,17 @@ class claseC:
                 lista_mascara.append(0)
         # los valores de la lista los unimos en un solo valor y los pasamos a int.
         lista_str = ''.join(map(str, lista_mascara))
+        # conocer los bits encendidos para la mascara de red clase C.
+        encendidos = 24
+        for x in range(len(lista_mascara)):
+            encendidos += lista_mascara[x]
         # la variable "var_int" almacenara el valor decimal del último octeto.
         var_int = int(lista_str, 2)
         # finalmente comprobamos si es viable el subneteo y mostramos los mensajes.
         if var_subred >= self.subredes:
             print('\tEl desarrollo del subneting es viable.\n \tse comprobo con la formula: 2^#bit - 2 ≥ #subredes')
             print('\t\t\t',var_subred,'>=',self.subredes)
-            print('\t\t La nueva mascara es: 255.255.255.' + str(var_int) + '\n')
+            print('\t\t La nueva mascara es: 255.255.255.' + str(var_int) + ' /' + str(encendidos) + '\n')
             print('*' * 80)
         else:
             print('No es valido el desarrollo de subneting. 2^#bit - 2 !≥ #subredes')
@@ -106,10 +110,8 @@ class ClaseCsubnetting(claseC):
             lista_aux = []
         # obtención del inicio y fin del rango en enteros.
         for x in range(len(lista_binaria)):
-            var_int = int(i_lista_binaria[x], 2)
-            var_int_f = int(f_lista_binaria[x], 2)
-            i_lista_binaria[x] = var_int
-            f_lista_binaria[x] = var_int_f
+            i_lista_binaria[x] = int(i_lista_binaria[x], 2)
+            f_lista_binaria[x] = int(f_lista_binaria[x], 2)
         
         def ini_fin(rangos, direc_ip, inicio_lis, fin_lis):
             inicio = []
